@@ -1,9 +1,8 @@
-# 
-typescript-demo-api-22-10-2022
+# typescript-demo-api-22-10-2022
 
 ```
 docker compose up -d
-yarn 
+yarn
 yarn dev
 ```
 
