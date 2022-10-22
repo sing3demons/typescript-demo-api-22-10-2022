@@ -10,6 +10,7 @@ const router = Router()
 
 router.get('/profile', authen, (req: Request, res: Response) => {
   const user = req.user
+
   res.status(200).json({
     user,
   })
