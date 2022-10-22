@@ -1,0 +1,10 @@
+version: '3.9'
+services:
+  mongo:
+    image: mongo:4.4.17-focal
+    container_name: "mongo"
+    restart: always
+    ports: 
+        - 27017:27017
+    volumes: 
+        - ./_data:/data/db
