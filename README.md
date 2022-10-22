@@ -1,6 +1,17 @@
+# 
+typescript-demo-api-22-10-2022
+
+```
+docker compose up -d
+yarn 
+yarn dev
+```
+
+```
 yarn init -y
 yarn add -D tsc
 tsc --init
+```
 
 ```tsconfig.json
     "module": "commonjs",
@@ -12,7 +23,9 @@ tsc --init
     "outDir": "dist"
 ```
 
+```
 yarn add -D typescript ts-node ts-node-dev
+```
 
 ```package.json
  "scripts": {
