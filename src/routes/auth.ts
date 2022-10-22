@@ -4,8 +4,16 @@ import User from '../model/User'
 import { EncryptPassword } from '../utils/bcrypt'
 import bcrypt from 'bcrypt'
 import jwt from 'jsonwebtoken'
+import { authen } from '../middleware/passportJWT'
 
 const router = Router()
+
+router.get('/profile', authen, (req: Request, res: Response) => {
+  const user = req.user
+  res.status(200).json({
+    user,
+  })
+})
 
 router.post('/register', async (req: Request, res: Response) => {
   const { name, email, password }: UserRequest = req.body

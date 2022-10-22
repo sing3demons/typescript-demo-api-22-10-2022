@@ -5,6 +5,7 @@ import authRoute from './routes/auth'
 import userRoute from './routes/user'
 import fs from 'fs'
 import path from 'path'
+import passport from 'passport'
 
 const app = express()
 const port = 3000
@@ -15,11 +16,12 @@ if (!fs.existsSync(dir)) {
 }
 
 initMongo() //start mongodb
-app.use('/images', express.static(path.join(__dirname, '../', dir)))
 
+app.use('/images', express.static(path.join(__dirname, '../', dir)))
 app.use(morgan('dev'))
 app.use(express.json({}))
 app.use(express.urlencoded({ extended: false }))
+app.use(passport.initialize())
 
 app.get('/', (req: Request, res: Response) => {
   res.status(200).send('hello')
