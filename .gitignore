@@ -130,3 +130,4 @@ dist
 .pnp.*
 _data
 yarn.lock
+public

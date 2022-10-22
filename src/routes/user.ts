@@ -2,6 +2,8 @@ import { Request, Response, Router } from 'express'
 import bcrypt from 'bcrypt'
 import UserRequest from '../dto/User'
 import User from '../model/User'
+import { EncryptPassword } from '../utils/bcrypt'
+import { upload } from '../utils/upload'
 
 const router = Router()
 
@@ -12,24 +14,33 @@ router.get('/', async (req: Request, res: Response) => {
   })
 })
 
-router.post('/', async (req: Request, res: Response) => {
-  const { name, email, password }: UserRequest = req.body
-  // bcrypt.genSalt(saltRounds, function (err, salt) {
-  //   bcrypt.hash(myPlaintextPassword, salt, function (err, hash) {
-  //   })
-  // })
-  const saltRounds = 10
-  const salt = await bcrypt.genSalt(saltRounds)
-  const hash = await bcrypt.hash(password, salt)
+router.post(
+  '/',
+  upload.single('avatar'),
+  async (req: Request, res: Response) => {
+    const { name, email, password }: UserRequest = req.body
 
-  const user = new User()
-  user.name = name
-  user.email = email
-  user.password = hash
-  await user.save()
+    const avatar = 'images/' + req.file?.filename
 
-  res.status(201).json(user)
-})
+    const exists = await User.findOne({ email: email })
+    if (exists) {
+      return res.status(400).json('email duplicate')
+    }
+
+    const saltRounds = 10
+    const salt = await bcrypt.genSalt(saltRounds)
+    const hash = await bcrypt.hash(password, salt)
+
+    const user = new User()
+    user.name = name
+    user.email = email
+    user.password = await EncryptPassword(password)
+    user.avatar = avatar
+    await user.save()
+
+    res.status(201).json(user)
+  }
+)
 
 router.put('/', (req: Request, res: Response) => {
   res.status(200).send('update')

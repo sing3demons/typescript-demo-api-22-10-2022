@@ -23,6 +23,6 @@ yarn add -D typescript ts-node ts-node-dev
 ```
 
 ```
-yarn add express morgan mongoose bcrypt
-yarn add -D @types/express @types/morgan @types/mongoose @types/bcrypt
+yarn add express morgan mongoose bcrypt jsonwebtoken
+yarn add -D @types/express @types/morgan @types/mongoose @types/bcrypt @types/jsonwebtoken
 ```
