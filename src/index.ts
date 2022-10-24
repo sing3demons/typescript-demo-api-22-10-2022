@@ -6,9 +6,10 @@ import userRoute from './routes/user'
 import fs from 'fs'
 import path from 'path'
 import passport from 'passport'
+import { PORT } from './config/index'
+import session from 'express-session'
 
 const app = express()
-const port = 3000
 const dir = path.join('public', 'images')
 
 if (!fs.existsSync(dir)) {
@@ -21,6 +22,19 @@ app.use('/images', express.static(path.join(__dirname, '../', dir)))
 app.use(morgan('dev'))
 app.use(express.json({}))
 app.use(express.urlencoded({ extended: false }))
+
+passport.serializeUser(function (user, done) {
+  done(null, user)
+})
+
+passport.deserializeUser(function (obj: any, done) {
+  done(null, obj)
+})
+
+app.use(
+  session({ secret: 'keyboard cat', resave: true, saveUninitialized: true })
+)
+
 app.use(passport.initialize())
 
 app.get('/', (req: Request, res: Response) => {
@@ -30,4 +44,4 @@ app.get('/', (req: Request, res: Response) => {
 app.use('/api/auth', authRoute)
 app.use('/api/users', userRoute)
 
-app.listen(port, () => console.log(`Server running at port ${port}`))
+app.listen(PORT, () => console.log(`Server running at port ${PORT}`))

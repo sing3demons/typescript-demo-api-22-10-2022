@@ -1,12 +1,17 @@
+import { SECRET_KEY } from '../config/index'
 import { Request, Response, NextFunction } from 'express'
 import passport from 'passport'
-import { Strategy as JwtStrategy, ExtractJwt } from 'passport-jwt'
-import UserResponse from '../dto/UserResponse'
+import {
+  Strategy as JwtStrategy,
+  ExtractJwt,
+  StrategyOptions,
+} from 'passport-jwt'
 import User from '../model/User'
 
-let opts: any = {}
-opts.jwtFromRequest = ExtractJwt.fromAuthHeaderAsBearerToken()
-opts.secretOrKey = 'secretOrPrivateKey'
+const opts: StrategyOptions = {
+  jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
+  secretOrKey: SECRET_KEY,
+}
 
 passport.use(
   new JwtStrategy(opts, async ({ sub }, done) => {
@@ -23,8 +28,10 @@ passport.use(
     }
   })
 )
+
 // interface
-const authen = passport.authenticate('jwt', { session: false })
+const passportJWT = passport.authenticate('jwt', { session: false })
+
 const checkAdmin = (req: Request, res: Response, next: NextFunction) => {
   const { role }: any = req.user
   if (role !== 'admin') {
@@ -35,4 +42,4 @@ const checkAdmin = (req: Request, res: Response, next: NextFunction) => {
 
   next()
 }
-export { authen, checkAdmin }
+export { passportJWT, checkAdmin }

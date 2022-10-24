@@ -10,9 +10,13 @@ const userSchema = new Schema(
       trim: true,
       required: true,
     },
-    password: { type: String, required: true },
+    password: { type: String },
     avatar: { type: String },
     role: { type: String, enum: ['admin', 'manager', 'user'], default: 'user' },
+    oauth: {
+      facebook: String,
+      google: String,
+    },
   },
   {
     collection: 'users',

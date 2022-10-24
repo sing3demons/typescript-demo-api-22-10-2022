@@ -5,7 +5,7 @@ import User from '../model/User'
 import { EncryptPassword } from '../utils/bcrypt'
 import { upload } from '../utils/upload'
 
-import { authen, checkAdmin } from '../middleware/passportJWT'
+import { passportJWT, checkAdmin } from '../middleware/passportJWT'
 
 const router = Router()
 
@@ -18,7 +18,7 @@ router.get('/', async (req: Request, res: Response) => {
 
 router.post(
   '/',
-  [authen, checkAdmin],
+  [passportJWT, checkAdmin],
   upload.single('avatar'),
   async (req: Request, res: Response) => {
     const { name, email, password }: UserRequest = req.body
