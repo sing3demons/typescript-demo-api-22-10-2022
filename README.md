@@ -1,10 +1,22 @@
 # typescript-demo-api-22-10-2022
 
-```
+### start app
+
+```start
 docker compose up -d
 yarn
-yarn dev
+yarn start
 ```
+
+clean app
+
+```clean
+docker compose down
+```
+
+<hr/>
+
+## crate project
 
 ```
 yarn init -y
@@ -18,7 +30,6 @@ tsc --init
     "esModuleInterop": true,
     "target": "es2020",
     "moduleResolution": "node",
-    "sourceMap": true,
     "outDir": "dist"
 ```
 
@@ -35,9 +46,9 @@ yarn add -D typescript ts-node ts-node-dev
 ```
 
 ```
-yarn add express morgan mongoose bcrypt jsonwebtoken passport passport-jwt express-session
+yarn add express morgan mongoose bcrypt jsonwebtoken passport passport-jwt passport-facebook passport-google-oauth20
 ```
 
 ```dev
-yarn add -D @types/express @types/morgan @types/mongoose @types/bcrypt @types/jsonwebtoken @types/passport  @types/passport-jwt @types/express-session
+yarn add -D @types/express @types/morgan @types/mongoose @types/bcrypt @types/jsonwebtoken @types/passport  @types/passport-jwt @types/passport-google-oauth20 @types/passport-facebook
 ```

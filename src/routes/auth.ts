@@ -71,4 +71,21 @@ router.get(
   }
 )
 
+router.get(
+  '/login/google',
+  passport.authenticate('google', {
+    scope: ['profile', 'email'],
+    session: false,
+    failureRedirect: '/',
+  }),
+  (req, res) => {
+    const { sub }: any = req.user
+    const token = signToken(sub)
+
+    res.status(200).json({
+      access_token: token,
+    })
+  }
+)
+
 export default router

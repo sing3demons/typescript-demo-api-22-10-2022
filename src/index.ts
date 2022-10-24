@@ -9,6 +9,7 @@ import passport from 'passport'
 import { PORT } from './config/index'
 
 import PassportFacebook from './middleware/passport-facebook'
+import PassportGoogle from './middleware/passport-google'
 import PassportJWT from './middleware/passportJWT'
 
 const app = express()
@@ -21,6 +22,7 @@ if (!fs.existsSync(dir)) {
 initMongo() //start mongodb
 PassportJWT()
 PassportFacebook() //init passport.use
+PassportGoogle()
 app.use('/images', express.static(path.join(__dirname, '../', dir)))
 app.use(morgan('dev'))
 app.use(express.json({}))

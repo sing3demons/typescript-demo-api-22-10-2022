@@ -7,10 +7,17 @@ const FACEBOOK_APP_SECRET = process.env.FACEBOOK_APP_SECRET || ''
 const FACEBOOK_APP_URL = process.env.FACEBOOK_APP_URL || ''
 const SECRET_KEY = process.env.SECRET_KEY || ''
 
+const GOOGLE_APP_ID = process.env.GOOGLE_APP_ID || ''
+const GOOGLE_APP_SECRET = process.env.GOOGLE_APP_SECRET || ''
+const GOOGLE_APP_URL = process.env.GOOGLE_APP_URL || ''
+
 export {
   PORT,
   FACEBOOK_APP_ID,
   FACEBOOK_APP_SECRET,
   FACEBOOK_APP_URL,
   SECRET_KEY,
+  GOOGLE_APP_ID,
+  GOOGLE_APP_SECRET,
+  GOOGLE_APP_URL,
 }
