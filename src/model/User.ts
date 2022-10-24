@@ -7,7 +7,7 @@ interface IUserMethods {
   ComparePassword(password: string): Promise<boolean>
 }
 
-type UserModel = Model<IUser, {}, IUserMethods>
+export type UserModel = Model<IUser, {}, IUserMethods>
 
 const userSchema = new Schema(
   {
@@ -26,6 +26,8 @@ const userSchema = new Schema(
       facebook: { type: String, unique: true },
       google: String,
     },
+    resetPasswordToken: { type: String },
+    resetPasswordExpires: { type: Date },
   },
   {
     collection: 'users',
@@ -44,7 +46,7 @@ userSchema.methods.EncryptPassword = async function (
 userSchema.methods.ComparePassword = async function (
   password: string
 ): Promise<boolean> {
-  return await bcrypt.compare(password, this.user.password)
+  return await bcrypt.compare(password, this.password)
 }
 
 const User = model<IUser, UserModel>('User', userSchema)

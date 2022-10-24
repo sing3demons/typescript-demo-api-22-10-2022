@@ -11,6 +11,9 @@ const GOOGLE_APP_ID = process.env.GOOGLE_APP_ID || ''
 const GOOGLE_APP_SECRET = process.env.GOOGLE_APP_SECRET || ''
 const GOOGLE_APP_URL = process.env.GOOGLE_APP_URL || ''
 
+const GMAIL = process.env.GMAIL || ''
+const GMAIL_PASSWORD = process.env.GMAIL_PASSWORD || ''
+
 export {
   PORT,
   FACEBOOK_APP_ID,
@@ -20,4 +23,6 @@ export {
   GOOGLE_APP_ID,
   GOOGLE_APP_SECRET,
   GOOGLE_APP_URL,
+  GMAIL,
+  GMAIL_PASSWORD,
 }

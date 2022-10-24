@@ -46,7 +46,7 @@ yarn add -D typescript ts-node ts-node-dev
 ```
 
 ```
-yarn add express morgan mongoose bcrypt jsonwebtoken passport passport-jwt passport-facebook passport-google-oauth20
+yarn add express morgan mongoose bcrypt jsonwebtoken passport passport-jwt passport-facebook passport-google-oauth20 nodemailer
 ```
 
 ```dev
