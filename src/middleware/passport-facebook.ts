@@ -1,4 +1,3 @@
-import { Request, Response, NextFunction } from 'express'
 import passport from 'passport'
 import { Strategy as FacebookStrategy, StrategyOption } from 'passport-facebook'
 import User from '../model/User'
@@ -17,29 +16,34 @@ let opts: StrategyOption = {
   profileFields: ['id', 'displayName', 'picture.type(large)', 'email'],
 }
 
-passport.use(
-  new FacebookStrategy(opts, async (accessToken, refreshToken, profile, cb) => {
-    const { id, picture, email, name } = profile._json
-    const avatar = await uploadFromFB(id, picture?.data?.url)
-    // console.log(profile)
+const PassportFacebook = () =>
+  passport.use(
+    new FacebookStrategy(
+      opts,
+      async (accessToken, refreshToken, profile, cb) => {
+        try {
+          const data = profile
+          const { id, picture, email, name } = data._json
+          const exitsUser = await User.findOne({ 'oauth.facebook': id })
+          if (exitsUser) {
+            return cb(null, exitsUser)
+          }
 
-    if (!avatar) return cb('error', false, 'error')
-    const user = await User.create({
-      email: email,
-      avatar,
-      name,
-      oauth: { facebook: id },
-    })
-    cb(null, user)
-  })
-)
+          const avatar = await uploadFromFB(id, picture?.data?.url)
 
-const passportFacebook = passport.authenticate('facebook', {
-  // successRedirect: '/api/auth/profile/facebook',
-  scope: ['email'],
-})
-export { passportFacebook }
+          if (!avatar) return cb('error', false, 'error')
+          const user = await User.create({
+            email: email,
+            avatar,
+            name,
+            oauth: { facebook: id },
+          })
+          cb(null, user)
+        } catch (error) {
+          console.log(error)
+        }
+      }
+    )
+  )
 
-//     function (accessToken, refreshToken, profile, cb) {
-//       User.findOrCreate({ facebookId: profile.id }, function (err, user) {
-//         return cb(err, user)
+export default PassportFacebook

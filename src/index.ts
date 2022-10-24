@@ -7,7 +7,9 @@ import fs from 'fs'
 import path from 'path'
 import passport from 'passport'
 import { PORT } from './config/index'
-import session from 'express-session'
+
+import PassportFacebook from './middleware/passport-facebook'
+import PassportJWT from './middleware/passportJWT'
 
 const app = express()
 const dir = path.join('public', 'images')
@@ -17,12 +19,12 @@ if (!fs.existsSync(dir)) {
 }
 
 initMongo() //start mongodb
-
+PassportJWT()
+PassportFacebook() //init passport.use
 app.use('/images', express.static(path.join(__dirname, '../', dir)))
 app.use(morgan('dev'))
 app.use(express.json({}))
 app.use(express.urlencoded({ extended: false }))
-
 passport.serializeUser(function (user, done) {
   done(null, user)
 })
@@ -31,14 +33,18 @@ passport.deserializeUser(function (obj: any, done) {
   done(null, obj)
 })
 
-app.use(
-  session({ secret: 'keyboard cat', resave: true, saveUninitialized: true })
-)
-
 app.use(passport.initialize())
-
+// app.use(function (req, res, next) {
+//   res.locals.user = req.user || null
+//   next()
+// })
 app.get('/', (req: Request, res: Response) => {
   res.status(200).send('hello')
+})
+
+app.get('/profile', (req, res) => {
+  console.log(req.user)
+  res.json(req.user)
 })
 
 app.use('/api/auth', authRoute)

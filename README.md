@@ -41,7 +41,3 @@ yarn add express morgan mongoose bcrypt jsonwebtoken passport passport-jwt expre
 ```dev
 yarn add -D @types/express @types/morgan @types/mongoose @types/bcrypt @types/jsonwebtoken @types/passport  @types/passport-jwt @types/express-session
 ```
-
-### passport-facebook -> https://developers.facebook.com/
-```
-```

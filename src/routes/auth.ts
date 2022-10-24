@@ -3,24 +3,16 @@ import UserRequest from '../dto/User'
 import User from '../model/User'
 import { EncryptPassword } from '../utils/bcrypt'
 import bcrypt from 'bcrypt'
-import jwt from 'jsonwebtoken'
-import { passportJWT } from '../middleware/passportJWT'
-import { passportFacebook } from '../middleware/passport-facebook'
-import { SECRET_KEY } from '../config/index'
+
+import { authenJWT } from '../middleware/index'
+
+import passport from 'passport'
+import signToken from '../utils/jwt'
 
 const router = Router()
 
-router.get('/profile', passportJWT, (req: Request, res: Response) => {
+router.get('/profile', authenJWT, (req: Request, res: Response) => {
   const user = req.user
-
-  res.status(200).json({
-    user,
-  })
-})
-
-router.get('/profile/facebook', (req: Request, res: Response) => {
-  const user = req.user
-  console.log(user)
 
   res.status(200).json({
     user,
@@ -55,20 +47,28 @@ router.post('/login', async (req: Request, res: Response) => {
   const isValid = await bcrypt.compare(password, user.password)
   if (!isValid) return res.status(400).json('username or password invalid')
 
-  const token = jwt.sign({ sub: user._id }, SECRET_KEY, {
-    expiresIn: '1h',
-  })
+  const token = signToken(user._id)
 
   res.status(200).json({
     access_token: token,
   })
 })
 
-router.get('/login/facebook', passportFacebook, (req, res) => {
-  const profile = req.user
-  res.status(200).json({
-    profile,
-  })
-})
+router.get(
+  '/login/facebook',
+  passport.authenticate('facebook', {
+    // scope: ['email'],
+    session: false,
+    failureRedirect: '/',
+  }),
+  (req, res) => {
+    const { _id }: any = req.user
+    const token = signToken(_id)
+
+    res.status(200).json({
+      access_token: token,
+    })
+  }
+)
 
 export default router
