@@ -2,7 +2,7 @@ import { Request, Response, Router } from 'express'
 import bcrypt from 'bcrypt'
 import UserRequest from '../dto/User'
 import User from '../model/User'
-import { EncryptPassword } from '../utils/bcrypt'
+
 import { upload } from '../utils/upload'
 
 import { authenJWT, checkAdmin } from '../middleware/index'
@@ -37,7 +37,7 @@ router.post(
     const user = new User()
     user.name = name
     user.email = email
-    user.password = await EncryptPassword(password)
+    user.password = await user.EncryptPassword(password)
     user.avatar = avatar
     await user.save()
 

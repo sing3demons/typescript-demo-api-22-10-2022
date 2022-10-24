@@ -1,8 +1,6 @@
 import { Request, Response, Router } from 'express'
 import UserRequest from '../dto/User'
 import User from '../model/User'
-import { EncryptPassword } from '../utils/bcrypt'
-import bcrypt from 'bcrypt'
 
 import { authenJWT } from '../middleware/index'
 
@@ -30,7 +28,7 @@ router.post('/register', async (req: Request, res: Response) => {
   const user = new User()
   user.name = name
   user.email = email
-  user.password = await EncryptPassword(password)
+  user.password = await user.EncryptPassword(password)
   await user.save()
 
   res.status(201).json(user)
@@ -44,7 +42,7 @@ router.post('/login', async (req: Request, res: Response) => {
   if (user.password === undefined)
     return res.status(400).json('username or password invalid')
 
-  const isValid = await bcrypt.compare(password, user.password)
+  const isValid = await user.ComparePassword(password)
   if (!isValid) return res.status(400).json('username or password invalid')
 
   const token = signToken(user._id)

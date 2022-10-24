@@ -1,4 +1,13 @@
-import { model, Schema } from 'mongoose'
+import { Model, model, Schema } from 'mongoose'
+import bcrypt from 'bcrypt'
+import IUser from '../dto/IUser'
+
+interface IUserMethods {
+  EncryptPassword(password: string): Promise<string>
+  ComparePassword(password: string): Promise<boolean>
+}
+
+type UserModel = Model<IUser, {}, IUserMethods>
 
 const userSchema = new Schema(
   {
@@ -24,5 +33,19 @@ const userSchema = new Schema(
   }
 )
 
-const User = model('User', userSchema)
+userSchema.methods.EncryptPassword = async function (
+  password: string
+): Promise<string> {
+  const saltRounds = 10
+  const salt = await bcrypt.genSalt(saltRounds)
+  return await bcrypt.hash(password, salt)
+}
+
+userSchema.methods.ComparePassword = async function (
+  password: string
+): Promise<boolean> {
+  return await bcrypt.compare(password, this.user.password)
+}
+
+const User = model<IUser, UserModel>('User', userSchema)
 export default User
