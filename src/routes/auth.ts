@@ -1,6 +1,6 @@
 import { Router } from 'express'
 
-import * as authController from '../controller/auth.controller'
+import authController from '../controller/auth.controller'
 
 import {
   authenJWT,
@@ -26,8 +26,8 @@ router.get('/login/google', googlePassport, authController.loginGoogle)
 
 router.post('/forgot-password', authController.forgotPassword)
 router.get('/reset-password/:token', authController.resetPassword)
-router.post('/reset-password', authController.updatePassword)
-// router.post('/update-password', authController.updatePassword)
+router.post('/reset-password', authController.changePassword)
+router.patch('/update-password', authenJWT, authController.updatePassword)
 //update-password
 
 export default router

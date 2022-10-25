@@ -16,6 +16,7 @@ const PassportJWT = () =>
   passport.use(
     new JwtStrategy(opts, async ({ sub }, done) => {
       try {
+        console.log(sub)
         const user = await User.findById(sub)
         if (!user) {
           const err = new Error('unauthorized')
