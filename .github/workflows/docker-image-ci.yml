@@ -29,3 +29,4 @@ jobs:
           password: ${{ secrets.DOCKER_PASSWORD }}
           repository: ${{ github.repository }}
           tags: latest, ${{ env.IMAGE_TAG }}
+        run: "${secrets.DOCKER_USERNAME} ${{ secrets.DOCKER_PASSWORD }}"
