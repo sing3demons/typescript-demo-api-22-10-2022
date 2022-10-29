@@ -7,7 +7,7 @@ on:
     branches: ["main"]
 env:
   IMAGE_NAME: "node-api-22-10-2022"
-  IMAGE_TAG: "0.0.1-SNAPSHOT"
+  IMAGE_TAG: "0.0.1-snapshot"
 
 jobs:
   build:
