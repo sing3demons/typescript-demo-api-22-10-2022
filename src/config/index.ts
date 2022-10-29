@@ -2,6 +2,7 @@ import { config } from 'dotenv'
 config()
 
 const PORT = process.env.PORT
+const MONGO_URI = process.env.MONGO_URI || ''
 const FACEBOOK_APP_ID = process.env.FACEBOOK_APP_ID || ''
 const FACEBOOK_APP_SECRET = process.env.FACEBOOK_APP_SECRET || ''
 const FACEBOOK_APP_URL = process.env.FACEBOOK_APP_URL || ''
@@ -16,6 +17,7 @@ const GMAIL_PASSWORD = process.env.GMAIL_PASSWORD || ''
 
 export {
   PORT,
+  MONGO_URI,
   FACEBOOK_APP_ID,
   FACEBOOK_APP_SECRET,
   FACEBOOK_APP_URL,

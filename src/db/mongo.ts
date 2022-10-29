@@ -1,8 +1,9 @@
 import { connect } from 'mongoose'
+import { MONGO_URI } from '../config'
 
 const initMongo = async () => {
   try {
-    await connect('mongodb://localhost:27017/test-api')
+    await connect(MONGO_URI)
     console.log('Connect to mongoDB')
   } catch (error) {
     console.log(`mongo error: ${error}`)

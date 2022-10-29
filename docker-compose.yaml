@@ -8,3 +8,26 @@ services:
         - 27017:27017
     volumes: 
         - ./_data:/data/db
+  webapi:
+   image: backend:0.1
+   build: .
+   container_name: 'webapi'
+   restart: always
+   ports:
+     - 3000:3000
+   environment:
+     - PORT=3000
+     - MONGO_URI=${MONGO_URI}
+     - FACEBOOK_APP_ID=${FACEBOOK_APP_ID}
+     - FACEBOOK_APP_SECRET=${FACEBOOK_APP_SECRET}
+     - FACEBOOK_APP_URL=http://localhost:3000/api/auth/login/facebook
+     - SECRET_KEY=${SECRET_KEY}
+     - GOOGLE_APP_ID=${GOOGLE_APP_ID}
+     - GOOGLE_APP_SECRET=${GOOGLE_APP_SECRET}
+     - GOOGLE_APP_URL=http://localhost:3000/api/auth/login/google
+     - GMAIL=${GMAIL}
+     - GMAIL_PASSWORD=${GMAIL_PASSWORD}
+   volumes:
+    - ./public:/public
+   depends_on:
+    - mongo

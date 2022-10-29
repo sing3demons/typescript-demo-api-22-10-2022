@@ -34,7 +34,7 @@ tsc --init
 ```
 
 ```
-yarn add -D typescript ts-node ts-node-dev
+yarn add -D typescript ts-node ts-node-dev rimraf
 ```
 
 ```package.json
@@ -46,7 +46,7 @@ yarn add -D typescript ts-node ts-node-dev
 ```
 
 ```
-yarn add express morgan mongoose bcrypt jsonwebtoken passport passport-jwt passport-facebook passport-google-oauth20 nodemailer
+yarn add express morgan mongoose bcrypt jsonwebtoken passport passport-jwt passport-facebook passport-google-oauth20 nodemailer 
 ```
 
 ```dev
