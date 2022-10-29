@@ -1,4 +1,3 @@
-
 FROM node:14-alpine as build
 WORKDIR /usr/src/app
 COPY package.json ./
