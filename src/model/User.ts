@@ -23,7 +23,7 @@ const userSchema = new Schema(
     avatar: { type: String },
     role: { type: String, enum: ['admin', 'manager', 'user'], default: 'user' },
     oauth: {
-      facebook: { type: String, unique: true },
+      facebook: String,
       google: String,
     },
     resetPasswordToken: { type: String },
